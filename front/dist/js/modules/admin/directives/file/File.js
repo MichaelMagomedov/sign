@@ -77,6 +77,8 @@ app.directive("file", ['$fileService', '$rootScope', '$uibModal', 'localStorageS
                                     title: "File not signed",
                                     type: "warning",
                                 });
+                                scope.loading = false;
+    
                             }).finally(function () {
                                 scope.onSign();
                             });
