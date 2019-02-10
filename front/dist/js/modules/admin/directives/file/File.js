@@ -79,7 +79,6 @@ app.directive("file", ['$fileService', '$rootScope', '$uibModal', 'localStorageS
                                 });
                             }).finally(function () {
                                 scope.onSign();
-                                scope.loading = false;
                             });
                             
                         }
@@ -87,14 +86,16 @@ app.directive("file", ['$fileService', '$rootScope', '$uibModal', 'localStorageS
                 };
                 
                 $rootScope.$on(scope.address+"-sign", function (event, errors) {
-                    
+    
+                    scope.loading = false;
+    
                     if (!errors) {
                         toast.success('File signed!');
                         scope.onSign();
                         scope.loadFileInfo();
                         return;
                     }
-                    
+    
                     toast.error('File sign fail! More information in operation info');
                     
                 });
