@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal"
+          ng-click="close()"
+          aria-label="Close">
+    <span aria-hidden="true">×</span></button>
+  <h4 class="modal-title">Transaction info</h4>
+</div>
+<div class="modal-body">
+  <p>Status :&nbsp;<transaction-status errors="transaction.errors" info="transaction.info"></transaction-status>
+  </p>
+  <p ng-if="transaction.errors.length > 0">Errors :
+  <ul>
+    <li ng-repeat="error in transaction.errors">{{ error }}</li>
+  </ul>
+  </p>
+  <p>System info :</p>
+  <json-formatter open="1" json="transaction.info"></json-formatter>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default pull-left" ng-click="close()">Close</button>
+</div>

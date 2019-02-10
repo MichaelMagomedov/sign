@@ -1,0 +1,140 @@
+<section class="content-header">
+  <h1>
+    Files
+    <small>Information about you account</small>
+  </h1>
+</section>
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+
+      <div class="info-box">
+          <span class="info-box-icon bg-black-blue">
+            <i class="fa fa-file"></i></span>
+        <div class="info-box-content">
+
+          <div class="overlay" ng-if="files == null">
+            <i class="fa fa-refresh fa-spin"></i>
+          </div>
+
+          <span class="info-box-text">Uploaded files</span>
+          <span class="info-box-number" ng-if="files == null">0</span>
+          <span class="info-box-number" ng-if="files != null">{{ files.length }}</span>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-green"><i class="fa fa-dollar"></i></span>
+        <div class="info-box-content">
+
+          <div class="overlay" ng-if="authInfo.balance == null">
+            <i class="fa fa-refresh fa-spin"></i>
+          </div>
+
+          <span class="info-box-text">Balance</span>
+          <span class="info-box-number" ng-if="authInfo.balance == null">
+            0 <i class="fa fa-dollar"></i>
+          </span>
+          <span class="info-box-number" ng-if="authInfo.balance != null">
+            {{ authInfo.balance }} <i class="fa fa-dollar"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-black-blue"><i class="fa fa-info"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">Account address</span>
+          <br/>
+          <div class="input-group">
+            <input type="text" id="publicKey" disabled value="{{ authInfo.pkh }}" class="form-control">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary" ngclipboard
+                      ngclipboard-success="copyAddress(e);"
+                      data-clipboard-text="{{ authInfo.pkh }}">copy
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="col-sm-6 col-xs-12">
+      <div class="box box-danger">
+
+        <div class="overlay" ng-if="checkFormObj.loading == true">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+
+        <form role="form" name="checkForm">
+          <div class="box-body">
+            <p>Check file</p>
+            <div class="form-group has-feedback">
+
+              <input name="checkFile" ng-model="checkFormObj.file" file-read file-model="checkFormObj.file"
+                     methods="checkFormObj.methods" required type="file" class="form-control">
+              <i class="fa fa-file form-control-feedback"></i>
+              <p class="text-red" ng-show="checkForm.checkFile.$error.required && checkFormObj.showError">
+                File require
+              </p>
+
+            </div>
+            <div class="form-group has-feedback">
+
+              <input type="text" autocomplete="off" required name="address"
+                     ng-model="checkFormObj.address" class="form-control" placeholder="Enter address">
+              <i class="fa fa-user form-control-feedback"></i>
+
+              <p class="text-red" ng-show="checkForm.address.$error.required && checkFormObj.showError">
+                Address require
+              </p>
+
+            </div>
+            <button type="submit" ng-click="checkSign(checkForm.$valid)" class="btn btn-primary btn-flat">
+              Check sign
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-12">
+      <div class="box box-primary">
+
+        <div class="overlay" ng-if="uploadFormObj.loading == true">
+          <i class="fa fa-refresh fa-spin"></i>
+        </div>
+
+        <form role="form" name="uploadForm">
+          <div class="box-body">
+            <p>Upload new file</p>
+            <div class="form-group has-feedback">
+
+              <input name="createFile" ng-model="uploadFormObj.file" file-read file-model="uploadFormObj.file"
+                     methods="uploadFormObj.methods" required type="file" class="form-control">
+              <i class="fa fa-file form-control-feedback"></i>
+              <p class="text-red" ng-show="uploadForm.createFile.$error.required && uploadFormObj.showError">
+                File require
+              </p>
+
+            </div>
+            <button type="submit" ng-click="uploadFile(uploadForm.$valid)" class="btn btn-primary btn-flat">Upload
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-xs-12 text-justify">
+      <file ng-repeat="file in files" on-sign="refreshBalance" address="file.address"></file>
+    </div>
+
+  </div>
+
+</section>

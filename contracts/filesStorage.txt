@@ -1,0 +1,21 @@
+[%%version 0.5]
+
+type storage = {
+  files: (string,address) big_map;
+  nothing:  unit;
+}
+
+let%init storage : storage = {
+  files= BigMap;
+  nothing= ();
+}
+
+
+let%entry main (params : (string* address)) storage =
+  let (hash,fileAddress) = params in
+  if Map.mem hash storage.files then
+    failwith "file exist sorry";
+  let files =  Map.add hash fileAddress storage.files in
+  let storage = storage.files <- files in
+
+  ([], storage)

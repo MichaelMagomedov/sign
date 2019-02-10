@@ -1,0 +1,84 @@
+[%%version 0.5]
+
+type storage = {
+  userFiles : (address,address set) big_map;
+  nothing:  unit;
+}
+
+let%init storage : storage = {
+  userFiles = BigMap;
+  nothing= ();
+}
+
+contract File = struct
+
+  type storage = string * address * address set * address set
+
+  let%entry main () storage  =
+    [],storage
+
+  let%entry sign () storage =
+    let (hash, owner, signs, access) = storage in
+    let userAddress  = Current.sender() in
+    if not(Set.mem userAddress access) && userAddress <> owner then
+      failwith ("Sign not alowed");
+    if Set.mem userAddress signs then failwith ("sign already exist");
+
+    let signs =  Set.add userAddress signs in
+    [], (hash, owner, signs, access)
+
+  let%entry addAccess (user:address) storage =
+    let (hash, owner, signs, access) = storage in
+    let userAddress  = Current.sender() in
+    if owner <> userAddress then failwith "you not owner";
+    let access =  Set.add user access in
+
+    [], (hash, owner, signs, access)
+
+  let%entry removeAccess (user:address) storage =
+    let (hash, owner, signs, access) = storage in
+    let userAddress  = Current.sender() in
+    if owner <> userAddress then failwith "you not owner";
+    let access = Set.remove user access in
+    [], (hash, owner, signs, access)
+
+end
+
+contract type FilesStorage = sig
+  type storage
+  val%entry main : (string*address) -> _
+end
+
+let%entry createFile ((fileHash : string),(manager:key_hash)) storage =
+  let userAddress = Current.sender() in
+
+  let (createContractOp,fileAddress) =
+    Contract.create
+      ~storage: (fileHash,userAddress,Set,Set)
+      ~manager:manager
+      ~spendable:true
+      ~delegatable:true
+      ~delegate:(None)
+      ~amount:0tz (contract File)
+  in
+
+  let fileStorage = (KT1Ki9hCRhWERgvVvXvVnFR3ruwM9sR5eLAN : FilesStorage.instance) in
+  let addContractToStorageOp = Contract.call
+      ~dest:fileStorage ~entry:main
+      ~parameter:(fileHash,fileAddress)
+      ~amount:0tz in
+
+  let userFiles = match Map.find userAddress storage.userFiles with
+    | None -> Set
+    | Some userFiles -> userFiles
+  in
+  let userFiles = Set.add fileAddress userFiles in
+  let usersFiles =  Map.add userAddress userFiles storage.userFiles in
+  let storage = storage.userFiles <- usersFiles in
+  [
+    createContractOp;
+    addContractToStorageOp
+  ], storage
+
+let%entry main () storage =
+  ([], storage)

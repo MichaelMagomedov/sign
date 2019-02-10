@@ -1,0 +1,55 @@
+<html lang="Ru-ru">
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/node_modules/admin-lte/dist/css/skins/skin-blue.css">
+  <link rel="stylesheet" href="/node_modules/admin-lte/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/node_modules/sweetalert/lib/sweet-alert.css">
+  <link rel="stylesheet" href="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+  <link rel="stylesheet" href="/node_modules/angular-simple-toast/dist/angular-simple-toast.min.css">
+  <link rel="stylesheet" href="/node_modules/jsonformatter/dist/json-formatter.min.css">
+
+  <link href="/css/modules/admin/style.css?version={{ appVersion }}" rel="stylesheet"/>
+  <link href="/css/common/style.css?version={{ appVersion }}" rel="stylesheet"/>
+
+  <script src="/node_modules/angular/angular.min.js"></script>
+
+  <base href="/admin/">
+
+</head>
+<body class="hold-transition skin-blue layout-top-nav" ng-app="admin">
+<toast></toast>
+<div ng-include="'/js/modules/admin/tpl/common/header/header.tpl.html'"></div>
+<div class="content-wrapper">
+  <div class="container">
+    <div class="row">
+      <ui-view></ui-view>
+    </div>
+  </div>
+</div>
+
+<div ng-include="'/js/modules/admin/tpl/common/footer.tpl.html'"></div>
+
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/node_modules/admin-lte/dist/js/adminlte.min.js"></script>
+<script src="/node_modules/sweetalert/lib/sweet-alert.min.js"></script>
+<script src="/lib/eztz/eztz.min.js"></script>
+
+<script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/node_modules/angular-sweetalert/SweetAlert.min.js"></script>
+<script src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+<script src="/node_modules/oclazyload/dist/ocLazyLoad.min.js"></script>
+<script src="/node_modules/angular-messages/angular-messages.min.js"></script>
+<script src="/node_modules/angular-simple-toast/dist/angular-simple-toast.min.js"></script>
+<script src="/node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+<script src="/node_modules/jsonformatter/dist/json-formatter.min.js"></script>
+
+<script src="/js/modules/admin/app.js?version={{ appVersion }}"></script>
+<script src="/js/common/common.js?version={{ appVersion }}"></script>
+</body>
+</html>

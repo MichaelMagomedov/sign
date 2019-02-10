@@ -1,0 +1,12 @@
+<div class="fi fi-size-xl fi-hh" ng-click="openInfoModal()">
+
+  <div class="overlay" ng-if="loading">
+    <i class="fa fa-refresh fa-spin"></i>
+  </div>
+  <div class="fi-content">
+    <i class="fa fa-ban" ng-if="!fileInfo.signed" title="File not signed"></i>
+    <i class="fa fa-check" ng-if="fileInfo.signed" title="File signed"></i>
+  </div>
+  <div class="fi-file-name" title="{{ fileInfo.hash }}" ng-if="fileInfo">{{ fileInfo.hash }}</div>
+  <div class="fi-file-name" ng-if="!fileInfo">Loading ...</div>
+</div>
