@@ -1,7 +1,7 @@
 server {
     listen 80;
     listen [::]:80;
-    root /var/www/sign/fron/compile;
+    root /var/www/sign/front/compile;
     index /html/auth.tpl.html;
  
     location /auth {
@@ -12,10 +12,5 @@ server {
     location /admin {
         default_type "text/html";
         try_files $uri.html $uri $uri/ /html/admin.tpl.html;
-    }
- 
-    location ~* \.(html|js|jpg|png|css)$ {
-        root /var/www/sign/fron/compile;
-        expires 30d;
     }
 }
