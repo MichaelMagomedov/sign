@@ -1,7 +1,7 @@
 server {
     listen 80;
     listen [::]:80;
-    root /var/www/sign/front;
+    root /var/www/sign/fron/compile;
     index /html/auth.tpl.html;
  
     location /auth {
